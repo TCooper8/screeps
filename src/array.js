@@ -11,6 +11,7 @@ const map = mapping => array => {
 }
 
 const iter = action => array => {
+  console.log("Iterating over array");
   var i = 0,
       len = array.length;
 
