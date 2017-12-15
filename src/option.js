@@ -6,10 +6,10 @@ class None extends Option {
 
 const none = None();
 
-const Option = {
+const OptionModule = {
   none,
 }
 
 module.exports = {
-  Option,
+  Option: OptionModule,
 }
