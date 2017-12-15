@@ -22,6 +22,28 @@ class MappingEnumerator extends Enumerator {
   }
 }
 
+class ActionEnumerator extends Enumerator {
+  constructor(action, e) {
+    super();
+    this._action = action;
+    this._e = e;
+  }
+
+  moveNext() {
+    return this._e.moveNext();
+  }
+
+  current() {
+    const cur = this._e.current();
+    this._action(cur);
+    return cur;
+  }
+
+  clone() {
+    return new ActionEnumerator(this._action, this._e);
+  }
+}
+
 class FilterEnumerator extends Enumerator {
   constructor(predicate, e) {
     super();
@@ -47,6 +69,33 @@ class FilterEnumerator extends Enumerator {
 
   clone() {
     return new FilterEnumerator(this._predicate, this._e);
+  }
+}
+
+class InitEnumerator extends Enumerator {
+  constructor(init, limit) {
+    super();
+    this._init = init;
+    this._index = -1;
+    this._limit = limit;
+    this._current = undefined;
+  }
+
+  moveNext() {
+    if (this._index >= this._limit - 1) {
+      return false;
+    }
+    ++this._index;
+    this._current = this._init(this._index);
+    return true;
+  }
+
+  current() {
+    return this._current;
+  }
+
+  clone() {
+    return new InitEnumerator(this._init, this._limit)
   }
 }
 
@@ -76,6 +125,34 @@ class Seq {
     const enumerator = this.getEnumerator();
     return new Seq(new FilterEnumerator(predicate, enumerator));
   }
+
+  sum() {
+    var acc = 0;
+    while (this._enumerator.moveNext()) {
+      acc += this._enumerator.current();
+    }
+
+    return acc;
+  }
+
+  tap(action) {
+    return new Seq(new ActionEnumerator(action, this.getEnumerator()));
+  }
+
+  toArray() {
+    const e = this._enumerator;
+    var array = [];
+    while (e.moveNext()) {
+      array.push(e.current());
+    }
+
+    return array;
+  }
+
+  cache() {
+    const array = this.toArray();
+    return new Seq(new ArrayEnumerator(array));
+  }
 }
 
 const ofArray = array => new Seq(new ArrayEnumerator(array));
@@ -100,10 +177,15 @@ const fold = folder => state => seq => {
   return acc;
 }
 
+const init = limit => init => {
+  return new Seq(new InitEnumerator(init, limit));
+}
+
 module.exports = {
   ofArray,
   ofObject,
   map,
   iter,
   fold,
+  init,
 }
