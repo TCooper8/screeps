@@ -44,6 +44,7 @@ const createWorkers = room => nWorkers =>
   // Go through any available spawners and create workers.
   Seq
     .ofObject(Game.spawns)
+    .map(pair => pair.value)
     .filter(spawner => spawner.room.name === room.name)
     .map(Worker.spawn)
     .map(() => 1)
