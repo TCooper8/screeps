@@ -73,6 +73,7 @@ const resolveState = room => {
 }
 
 const update = room => {
+  console.log("Updating room %s", room.name)
   resolveState(room);
 }
 

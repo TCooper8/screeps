@@ -184,5 +184,5 @@ module.exports.loop = function() {
   Seq
     .ofObject(Game.rooms)
     .map(pair => pair.value)
-    .map(RoomResolver.update);
+    .iter(RoomResolver.update);
 }
