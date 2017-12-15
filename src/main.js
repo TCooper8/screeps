@@ -2,7 +2,7 @@ const Worker = require('./worker')
 const Gatherer = require('./gatherer')
 const Option = require('./option')
 const Array = require('./array')
-const Seq = require('./collections/seq')
+const Seq = require('./collections/seq.js')
 
 const RoomResolver = require('./room')
 
