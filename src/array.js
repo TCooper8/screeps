@@ -25,7 +25,7 @@ const bind = binding => array => {
 
 Array.prototype.map = mapping => map(mapping)(this);
 Array.prototype.iter = action => iter(action)(this);
-Array.prototype.bind = binding => {
+Array.prototype.bind = function(binding) {
   console.log("Binding array");
   return bind(binding)(this);
 }
