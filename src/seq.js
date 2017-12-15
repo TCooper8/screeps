@@ -141,9 +141,10 @@ class Seq {
   }
 
   sum() {
+    const e = this.getEnumerator();
     var acc = 0;
-    while (this._enumerator.moveNext()) {
-      acc += this._enumerator.current();
+    while (e.moveNext()) {
+      acc += e.current();
     }
 
     return acc;
@@ -154,7 +155,7 @@ class Seq {
   }
 
   toArray() {
-    const e = this._enumerator;
+    const e = this.getEnumerator();
     var array = [];
     while (e.moveNext()) {
       array.push(e.current());
