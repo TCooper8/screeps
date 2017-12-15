@@ -15,7 +15,6 @@ module.exports.loop = function() {
     .bind(handleSpawners);
 
   _.each(Game.creeps, (creep) => {
-    console.log("Running worker");
     worker.gather(creep);
   });
 }
