@@ -23,9 +23,9 @@ const bind = binding => array => {
   return binding(array);
 }
 
-Array.prototype.map = map;
-Array.prototype.iter = iter;
-Array.prototype.bind = bind;
+Array.prototype.map = mapping => map(mapping)(this);
+Array.prototype.iter = action => iter(action)(this);
+Array.prototype.bind = binding => bind(binding)(this);
 
 module.exports = {
   map,
