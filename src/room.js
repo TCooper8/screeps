@@ -48,7 +48,7 @@ const moveWorkersToSlots = (workers, slots) => {
 
   console.log("Slots", slotCount);
 
-  workers.iter(Worker.gather)
+  workers.tap(worker => console.log(worker.name)).iter(Worker.gather)
 }
 
 const createWorkers = room => nWorkers =>
