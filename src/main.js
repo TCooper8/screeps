@@ -4,7 +4,7 @@ const Option = require('./option')
 const Array = require('./array')
 const Seq = require('./collections/seq')
 
-const Room = require('./room')
+const RoomResolver = require('./room')
 
 const codeWorkersNeeded = "Workers needed"
 const codeGatherersNeeded = "Gatherers needed"
@@ -184,5 +184,5 @@ module.exports.loop = function() {
   Seq
     .ofObject(Game.rooms)
     .map(pair => pair.value)
-    .map(Room.update);
+    .map(RoomResolver.update);
 }
