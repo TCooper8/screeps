@@ -1,11 +1,14 @@
 class Option { }
 
 class None extends Option {
-  constructor() {}
+  constructor() {
+    super()
+  }
 }
 
 class Some extends Option {
   constructor(value) {
+    super();
     this.value = value;
   }
 }
