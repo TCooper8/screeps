@@ -8,6 +8,7 @@ module.exports.loop = function() {
     }
 
     _.each(spawn.creeps, (creep) => {
+      console.log("Running worker");
       worker.gather(creep);
     });
   });
