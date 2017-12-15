@@ -14,6 +14,10 @@ const spawn = (spawner) => {
   console.log("Spawned creep with error(%s)", err);
 }
 
+const gather = (creep) => {
+  console.log("Gathering");
+}
+
 const cost = _.sum([
   moveCost,
   workCost,

@@ -6,6 +6,9 @@ module.exports.loop = function() {
     if (spawn.energy >= worker.cost) {
       worker.spawn(spawn);
     }
+
+    _.each(spawn.creeps, (creep) => {
+      worker.gather(creep);
+    });
   });
-  console.log("loop");
 }
