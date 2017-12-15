@@ -33,6 +33,28 @@ const findDroppedResources =
       )
     );
 
+const returnResource = creep => {
+  var err = null;
+  const spawner = _.min(Game.spawns, spawn => {
+    return spawn.energy
+  })
+
+  if (spawner.energy < spawner.energyCapacity) {
+    err = creep.transfer(spawner, RESOURCE_ENERGY);
+    if (err === ERR_NOT_IN_RANGE) {
+      err = creep.moveTo(spawner);
+      console.log("Creep[%s] moving to spawner(%s)", creep.name, spawner.name);
+    }
+    else {
+      console.log("Creep[%s] unhandled error(%s)", creep.name, err);
+    }
+  }
+  else {
+    const err = creep.drop(RESOURCE_ENERGY);
+    console.log("Creep[%s] dropped energy error(%s)", creep.name, err);
+  }
+};
+
 const findResource =
   creep =>
     findDroppedResources(creep)
@@ -43,6 +65,9 @@ const findResource =
 const gather = creep => {
   if (creep.carry.energy < creep.carryCapacity) {
     findResource(creep);
+  }
+  else {
+    returnResource(creep);
   }
 }
 
