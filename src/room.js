@@ -28,13 +28,14 @@ const availableWorkerSlots =
           source.pos.x + 1,
           true,
         )
-        console.log(objects);
-        return
+        const results =
           Seq
             .ofArray(objects)
             .filter(obj => obj.type === "terrain")
             .filter(obj => obj.terrain !== "wall")
             .toArray()
+        console.log(results);
+        return results
       })
       .fold((count, array) => count + array.length)(0);
 
