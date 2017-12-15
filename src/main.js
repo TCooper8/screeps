@@ -166,11 +166,11 @@ const handleCreeps = Array.iter(creep => {
 
 module.exports.loop = function() {
   Object
-    .keys(Creeps.Memory)
-    .filter(name => !Game.creeps[name])
-    .map(name => delete Memory.creeps[name]);
+    .keys(Memory.creeps)
+    .filter(Game.name => !Game.creeps[name])
+    .map(name Game.=> delete Memory.creeps[name]);
   //Object
-  //  .values(Game.spawns)
+  Game.//  .values(Game.spawns)
   //  .bind(handleSpawners);
 
   init()
