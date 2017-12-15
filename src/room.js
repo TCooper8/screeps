@@ -38,7 +38,29 @@ const availableWorkerSlots =
         console.log(results);
         return results
       })
-      .fold((count, array) => count + array.length)(0);
+;
+
+const moveWorkersToSlots = (workers, slots) => {
+  let slotCount = slots.count();
+  const workerCount = workers.count();
+
+  if (slotCount === 0) {
+    return;
+  }
+
+  // Run through the workers and assign them slots.
+  if (!Memory.workerSlots) Memory.workerSlots = {};
+  if (!Memory.workerSlotsInv) Memory.workerSlotsInv = {};
+
+  const e = worker.getEnumerator();
+  while (e.moveNext()) {
+    const worker = e.current();
+    if (!Memory.workerSlots[worker.name]) {
+      // This worker needs a slot.
+      Worker.gather(worker);
+    }
+  }
+}
 
 const createWorkers = room => nWorkers =>
   // Go through any available spawners and create workers.
@@ -62,13 +84,18 @@ const roomState = room => {
   // Now, we can establish what work needs to be done.
 
   // How many slots for workers are there?
-  const workerSlots = availableWorkerSlots(room);
+  const workerSlots = availableWorkerSlots(room).cache();
+  const workerSlotCount = workerSlots.count();
   const workerCount = workers.count()
-  if (workerCount < workerSlots) {
+
+  if (workerCount < workerSlotsCount) {
     // We need to create that many workers.
-    const workersSpawned = createWorkers(room)(workerSlots - workerCount);
+    const workersSpawned = createWorkers(room)(workerSlotsCount - workerCount);
     console.log("Spawned", workersSpawned, "workers");
   }
+
+  // Move workers to where they need to be.
+  moveWorkersToSlots(workers, workerSlots)
 }
 
 // We need to figure out what state the room is in.
