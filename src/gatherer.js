@@ -69,6 +69,9 @@ const returnResource = creep => {
       const err = creep.moveTo(creep.room.controller);
       console.log("Move to controller error %d", err);
     }
+    else {
+      creep.memory.state = gathering;
+    }
   }
 };
 
