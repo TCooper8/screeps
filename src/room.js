@@ -2,6 +2,7 @@
 
 const Seq = require("./seq");
 const Array = require('./array');
+const Worker = require('./worker');
 
 const economyState = 0
 
