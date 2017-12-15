@@ -169,8 +169,9 @@ class Seq {
   }
 
   count() {
+    const e = this.getEnumerator()
     var count = 0;
-    while (this._enumerator.moveNext()) {
+    while (e.moveNext()) {
       ++count;
     }
 
