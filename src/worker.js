@@ -1,16 +1,23 @@
+const Option = require("./option");
+
 const moveCost = 50
 const workCost = 100
 const carryCost = 50
 
 const spawn = (spawner) => {
   console.log("Spawning creep...");
+  const name = _.random(Number.MAX_SAFE_INTEGER).toString();
   const err = spawner.spawnCreep(
     [ MOVE,
       WORK,
       CARRY,
     ],
-    _.random(Number.MAX_SAFE_INTEGER).toString(),
+    name,
   );
+  if (err === OK) {
+    return Option.some(name);
+  }
+  return Option.none;
   console.log("Spawned creep with error(%s)", err);
 }
 
