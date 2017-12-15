@@ -38,6 +38,7 @@ const availableWorkerSlots =
         results.iter(obj => console.log(obj.type));
         return results.toArray()
       })
+      .fold((acc, array) => Array.append(acc, array))([])
 ;
 
 const moveWorkersToSlots = (workers, slots) => {
@@ -76,7 +77,7 @@ const roomState = room => {
   // Now, we can establish what work needs to be done.
 
   // How many slots for workers are there?
-  const workerSlots = availableWorkerSlots(room).cache();
+  const workerSlots = Seq.ofArray(availableWorkerSlots(room));
   const workerSlotsCount = workerSlots.count();
   const workerCount = workers.count()
 
