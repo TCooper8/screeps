@@ -1,5 +1,5 @@
 const map = mapping => array => {
-  var results = mapping.constructor.call(array.length);
+  var results = array.constructor(array.length);
   var i = -1;
   var len = array.length;
 
