@@ -10,7 +10,6 @@ const spawn = (spawner) => {
       CARRY,
     ],
     undefined,
-    undefined,
   );
   console.log("Spawned creep with error(%s)", err);
 }
