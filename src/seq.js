@@ -121,6 +121,13 @@ class Seq {
     return new Seq(new MappingEnumerator(mapping, enumerator));
   }
 
+  iter(action) {
+    const e = this.getEnumerator();
+    while (e.moveNext()) {
+      action(e.current())
+    }
+  }
+
   filter(predicate) {
     const enumerator = this.getEnumerator();
     return new Seq(new FilterEnumerator(predicate, enumerator));
