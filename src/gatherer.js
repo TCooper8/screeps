@@ -50,8 +50,9 @@ const returnResource = creep => {
     }
   }
   else {
-    const err = creep.drop(RESOURCE_ENERGY);
-    console.log("Creep[%s] dropped energy error(%s)", creep.name, err);
+    if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(creep.room.controller);
+    }
   }
 };
 

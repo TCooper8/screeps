@@ -9,6 +9,8 @@ const spawn = (spawner) => {
   const name = 'W' + _.random(Number.MAX_SAFE_INTEGER).toString();
   const err = spawner.spawnCreep(
     [ MOVE,
+      MOVE,
+      CARRY,
       WORK,
     ],
     name,
@@ -51,6 +53,8 @@ const gather = (creep) => {
 
 const cost = _.sum([
   moveCost,
+  carryCost,
+  workCost,
   workCost,
 ])
 
