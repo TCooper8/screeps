@@ -44,7 +44,7 @@ const returnResource = creep => {
     return spawn.energy
   })
 
-  if (spawner.energy <= spawner.energyCapacity) {
+  if (spawner.energy < spawner.energyCapacity) {
     err = creep.transfer(spawner, RESOURCE_ENERGY);
     if (err === ERR_NOT_IN_RANGE) {
       err = creep.moveTo(spawner);
@@ -52,6 +52,12 @@ const returnResource = creep => {
     }
     else if (err === ERR_NOT_ENOUGH_RESOURCES) {
       creep.memory.state = gathering;
+    }
+    else if (err === ERR_FULL) {
+      if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+        const err = creep.moveTo(creep.room.controller);
+        console.log("Move to controller error %d", err);
+      }
     }
     else {
       console.log("Creep[%s] unhandled error(%s)", creep.name, err);
