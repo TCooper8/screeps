@@ -47,7 +47,8 @@ const moveWorkersToSlots = (workers, slots) => {
   //const workerCount = workers.count();
 
   console.log("Slots", slotCount);
-
+  const _workers = workers.toArray();
+  console.log(_workers);
   workers.iter(Worker.gather)
 }
 
