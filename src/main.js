@@ -10,9 +10,9 @@ const handleSpawners = Array.iter(spawner => {
 
 module.exports.loop = function() {
   const spawns = Object.keys(Game.spawns);
-  handleSpawners(Object.values(Game.spawns));
-  //_.each(Game.spawns, (spawn) => {
-  //});
+  Object
+    .values(Game.spawns)
+    .bind(handleSpawners);
 
   _.each(Game.creeps, (creep) => {
     console.log("Running worker");
