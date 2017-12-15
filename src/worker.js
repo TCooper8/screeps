@@ -9,7 +9,7 @@ const spawn = (spawner) => {
       WORK,
       CARRY,
     ],
-    Number.MAX_SAFE_INTEGER.toString(),
+    _.random(Number.MAX_SAFE_INTEGER).toString(),
   );
   console.log("Spawned creep with error(%s)", err);
 }
