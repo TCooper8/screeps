@@ -153,6 +153,15 @@ class Seq {
     const array = this.toArray();
     return new Seq(new ArrayEnumerator(array));
   }
+
+  count() {
+    var count = 0;
+    while (this._enumerator.moveNext()) {
+      ++count;
+    }
+
+    return count;
+  }
 }
 
 const ofArray = array => new Seq(new ArrayEnumerator(array));
