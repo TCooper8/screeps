@@ -9,8 +9,8 @@ const spawn = (spawner) => {
   const name = 'W' + _.random(Number.MAX_SAFE_INTEGER).toString();
   const err = spawner.spawnCreep(
     [ MOVE,
-      MOVE,
       CARRY,
+      WORK,
       WORK,
     ],
     name,
