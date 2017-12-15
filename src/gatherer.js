@@ -70,8 +70,16 @@ const findResource =
   creep =>
     findDroppedResources(creep)
     .map(target => {
-      if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
+      const err = creep.pickup(target);
+      if (err === ERR_NOT_IN_RANGE) {
         return creep.moveTo(target);
+      }
+      else if (err === ERR_FULL) {
+        creep.memory.state = upgrading;
+        return 0;
+      }
+      else {
+        return err;
       }
     })
     .map(err => log(creep, "Error %s", err))
