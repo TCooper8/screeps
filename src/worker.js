@@ -14,6 +14,21 @@ const spawn = (spawner) => {
   console.log("Spawned creep with error(%s)", err);
 }
 
+const returnResource = creep => {
+  const spawner = _.min(Game.spawns, spawn => {
+    return spawn.energy
+  })
+
+  if (spawner.energy < spawner.energyCapacity) {
+    const err = creep.moveTo(spawner);
+    console.log("Creep[%s] moving to spawner(%s)", creep.name, spawner.name);
+  }
+  else {
+    const err = creep.drop(RESOURCE_ENERGY);
+    console.log("Creep[%s] dropped energy error(%s)", creep.name, err);
+  }
+};
+
 const gather = (creep) => {
   if(creep.carry.energy < creep.carryCapacity) {
     var sources = creep.room.find(FIND_SOURCES);
@@ -21,11 +36,14 @@ const gather = (creep) => {
       creep.moveTo(sources[0]);
     }
   }
-  else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
-    if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-      creep.moveTo(Game.spawns['Spawn1']);
-    }
+  else {
+    returnResource(creep);
   }
+  //else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
+    //if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+    //  creep.moveTo(Game.spawns['Spawn1']);
+    //}
+  //}
 }
 
 const cost = _.sum([
