@@ -31,15 +31,11 @@ const isSome = option => option.isSome();
 const map = mapping => option => option.map(mapping);
 const bind = binding => option => option.bind(binding);
 
-const OptionModule = {
+module.exports = {
   none,
   some,
   isNone,
   isSome,
   map,
   bind,
-}
-
-module.exports = {
-  Option: OptionModule,
 }
