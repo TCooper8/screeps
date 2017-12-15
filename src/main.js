@@ -155,7 +155,10 @@ const handleSpawners = Array.iter(spawner => {
 });
 
 const handleCreeps = Array.iter(creep => {
-  Worker.gather(creep);
+  if (creep.name[0] === 'W')
+    Worker.gather(creep);
+  else if (creep.name[0] === 'G')
+    Gatherer.gather(creep);
 });
 
 module.exports.loop = function() {
