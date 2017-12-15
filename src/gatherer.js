@@ -41,7 +41,30 @@ const returnResource = creep => {
     return spawn.energy
   })
 
-  if (spawner.energy < spawner.energyCapacity) {
+  const state = creep.memory["state"];
+  if (!state) {
+    state = "gathering";
+  }
+
+  if (state === "gathering") {
+    if (spawner.energy >= spawner.energyCapacity) {
+      state = "gathering";
+    }
+    else {
+      state = "upgrading"
+    }
+  }
+  else {
+    if (spawner.energy === 0) {
+      state = "gathering"
+    }
+    else {
+      state = "upgrading"
+    }
+  }
+  creep.memory["state"] = state;
+
+  if (state === "gathering") {
     err = creep.transfer(spawner, RESOURCE_ENERGY);
     if (err === ERR_NOT_IN_RANGE) {
       err = creep.moveTo(spawner);
