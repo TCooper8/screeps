@@ -35,7 +35,8 @@ const availableWorkerSlots =
             .filter(obj => obj.type === "terrain")
             .filter(obj => obj.terrain !== "wall")
             .toArray()
-        console.log(results);
+
+        Seq.iter(obj => console.log(obj.type))(results);
         return results
       })
 ;
