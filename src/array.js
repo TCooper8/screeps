@@ -89,7 +89,7 @@ Array.prototype.foldWhile = function(folder, predicate) {
   return state => foldWhile(folder, predicate)(state)(this);
 }
 Array.prototype.append = function(arrayB) {
-  return append(this, arrayB);
+  return append(this)(arrayB);
 }
 
 module.exports = {

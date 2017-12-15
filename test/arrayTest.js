@@ -36,4 +36,12 @@ let sumTest = () => {
   )
 }
 
+const appendTest = () => {
+  shouldEqual(
+    [1,2].append([3]),
+    [1,2,3],
+  )
+}
+
 sumTest();
+appendTest();
