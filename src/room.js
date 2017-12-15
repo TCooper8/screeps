@@ -44,7 +44,7 @@ const availableWorkerSlots =
 const moveWorkersToSlots = (workers, slots) => {
   console.log("Moving workers...");
   let slotCount = slots.count();
-  const workerCount = workers.count();
+  //const workerCount = workers.count();
 
   console.log("Slots", slotCount);
 
