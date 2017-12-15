@@ -18,9 +18,9 @@ const checkEconomy = () => {
   const workerCount =
     Object
       .values(Game.creeps)
-      //.filter(creep => creep.name[0] === 'W')
-      //.map(creep => 1)
-      //.sum();
+      .filter(creep => creep.name[0] === 'W')
+      .map(creep => 1)
+      .sum();
   console.log(workerCount);
   const idealCount = idealWorkerCount();
 
