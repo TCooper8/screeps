@@ -55,9 +55,9 @@ const checkGatherers = () => {
       .sum();
   const idealCount = idealGathererCount();
 
-  if (workerCount < idealCount) {
+  if (count < idealCount) {
     return [
-      gatherersNeeded(idealCount - workerCount),
+      gatherersNeeded(idealCount - count),
     ]
   }
   else {
