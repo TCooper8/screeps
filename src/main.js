@@ -55,7 +55,7 @@ const spawnWorkers =
 const handleReq = req => {
   if (req.code === codeWorkersNeeded) {
     const created = spawnWorkers(req.amount);
-    console.log("Game created %d workers, needing %d", created, req.amount);
+    console.log("Game created %s workers, needing %s", created, req.amount);
     if (created < req.amount) {
       return {
         error: "Unable to created required workers"
