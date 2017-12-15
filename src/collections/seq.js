@@ -1,10 +1,24 @@
-const Option = require('../option');
+const Enumerator = require('./enumerator');
+const ArrayEnumerator = require('./array-enumerator');
+const ObjectEnumerator = require('./object-enumerator');
 
-class Enumerator {
-  constructor(moveNext, current, clone) {
-    this.moveNext = moveNext;
-    this.current = current;
-    this.clone = clone;
+class MappingEnumerator extends Enumerator {
+  constructor(mapping, e) {
+    super();
+    this._e = e;
+    this._mapping = mapping;
+  }
+
+  moveNext() {
+    return this._e.moveNext()
+  }
+
+  current() {
+    return this._mapping(this._e.current());
+  }
+
+  clone() {
+    return new MappingEnumerator(this._mapping, this._e);
   }
 }
 
@@ -25,90 +39,10 @@ class Seq {
     return this._enumerator.clone();
   }
 
-  map() {
+  map(mapping) {
     const enumerator = this.getEnumerator();
-    let current = undefined;
 
-    return new Seq(new Enumerator(
-      () => {
-        if (enumerator.moveNext()) {
-          current = mapping(enumerator.current());
-          return true;
-        }
-        else {
-          return false;
-        }
-      },
-      () => current,
-    ));
-  }
-}
-
-class ArrayEnumerator {
-  constructor(array) {
-    this._index = -1;
-    this._array = array;
-    this._length = array.length;
-    this._current = undefined;
-  }
-
-  moveNext() {
-    const index = this._index;
-    const length = this._length;
-
-    if (index < length - 1) {
-      this._index = index + 1;
-      this._current = this._array[this._index];
-      return true;
-    }
-    return false;
-  }
-
-  current() {
-    return this._current;
-  }
-
-  clone() {
-    return new ArrayEnumerator(this._array);
-  }
-}
-
-class KeyValue {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-  }
-
-  toString() {
-    return "(" + this.key + "," + this.value.toString() + ")";
-  }
-}
-
-class ObjectEnumerator {
-  constructor(obj) {
-    this._enum = new ArrayEnumerator(Object.keys(obj));
-    this._obj = obj;
-    this._current = undefined;
-  }
-
-  moveNext() {
-    if (this._enum.moveNext()) {
-      const key = this._enum.current();
-      this._current = new KeyValue(
-        key,
-        this._obj[key],
-      );
-      return true;
-    }
-    else return false;
-  }
-
-  current() {
-    return this._current;
-  }
-
-  clone() {
-    return new ObjectEnumerator(this._obj);
+    return new Seq(new MappingEnumerator(mapping, enumerator));
   }
 }
 
