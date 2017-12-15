@@ -175,5 +175,6 @@ module.exports.loop = function() {
 
   Object
     .values(Game.creeps)
+    .filter(creep => !creep.spawning)
     .bind(handleCreeps);
 }
