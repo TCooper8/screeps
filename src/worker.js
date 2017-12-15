@@ -10,7 +10,6 @@ const spawn = (spawner) => {
   const err = spawner.spawnCreep(
     [ MOVE,
       WORK,
-      CARRY,
     ],
     name,
   );
@@ -51,7 +50,9 @@ const gather = (creep) => {
     }
   }
   else {
-    returnResource(creep);
+    const err = creep.drop(RESOURCE_ENERGY);
+    console.log("Creep[%s] dropped energy error(%s)", creep.name, err);
+    //returnResource(creep);
   }
   //else if(Game.spawns['Spawn1'].energy < Game.spawns['Spawn1'].energyCapacity) {
     //if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -63,7 +64,6 @@ const gather = (creep) => {
 const cost = _.sum([
   moveCost,
   workCost,
-  carryCost,
 ])
 
 const worker = {

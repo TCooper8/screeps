@@ -64,6 +64,22 @@ const foldWhile = (folder, predicate) => state => array => {
   return acc;
 }
 
+const append = arrayA => arrayB => {
+  var lengthA = arrayA.length,
+      lengthB = arrayB.length,
+      length = lengthA + lengthB,
+      acc = arrayA.slice(0),
+      i = lengthA,
+      j = -1;
+
+  while (++j < lengthB) {
+    acc[i] = arrayB[j];
+    ++i;
+  }
+
+  return acc;
+}
+
 Array.prototype.map = function(mapping) { return map(mapping)(this) };
 Array.prototype.iter = function(action) { return iter(action)(this) };
 Array.prototype.bind = function(binding) { return bind(binding)(this) }
@@ -71,6 +87,9 @@ Array.prototype.sum = function() { return sum(this) }
 Array.prototype.filter = function(predicate) { return filter(predicate)(this) }
 Array.prototype.foldWhile = function(folder, predicate) {
   return state => foldWhile(folder, predicate)(state)(this);
+}
+Array.prototype.append = function(arrayB) {
+  return append(this, arrayB);
 }
 
 module.exports = {

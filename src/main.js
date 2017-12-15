@@ -1,8 +1,10 @@
 const Worker = require('./worker')
+const Gatherer = require('./gatherer')
 const Option = require('./option')
 const Array = require('./array')
 
 const codeWorkersNeeded = "Workers needed"
+const codeGatherersNeeded = "Gatherers needed"
 
 const workersNeeded = amount => {
   return {
@@ -12,9 +14,18 @@ const workersNeeded = amount => {
   }
 }
 
-const idealWorkerCount = () => 3;
+const gatherersNeeded = amount => {
+  return {
+    code: codeGatherersNeeded,
+    amount: amount,
+    priority: 8,
+  }
+}
 
-const checkEconomy = () => {
+const idealWorkerCount = () => 3;
+const idealGathererCount = () => 2;
+
+const checkWorkers = () => {
   const workerCount =
     Object
       .values(Game.creeps)
@@ -35,6 +46,30 @@ const checkEconomy = () => {
   }
 }
 
+const checkGatherers = () => {
+  const count =
+    Object
+      .values(Game.creeps)
+      .filter(creep => creep.name[0] === 'G')
+      .map(creep => 1)
+      .sum();
+  const idealCount = idealGathererCount();
+
+  if (workerCount < idealCount) {
+    return [
+      gatherersNeeded(idealCount - workerCount),
+    ]
+  }
+  else {
+    return []
+  }
+}
+
+const checkEconomy = () => {
+  checkWorkers()
+    .append(checkGatherers());
+}
+
 const spawnWorker =
   spawner =>
     Worker
@@ -52,13 +87,47 @@ const spawnWorkers =
         acc => acc < amount
       )(0)
 
+const spawnGatherer =
+  spawner =>
+    Gatherer
+      .spawn(spawner)
+      .map(() => 1)
+      .orElse(() => 0)
+
+const spawnGatherers =
+  amount =>
+    // Run through each spawner and try to make a worker.
+    Object
+      .values(Game.spawns)
+      .foldWhile(
+        (acc, s) => acc + spawnGatherer(s),
+        acc => acc < amount
+      )(0)
+
 const handleReq = req => {
+  console.log("Req %s", req.code);
   if (req.code === codeWorkersNeeded) {
     const created = spawnWorkers(req.amount);
+    console.log("Spawned %s workers", created);
     console.log("Game created %s workers, needing %s", created, req.amount);
     if (created < req.amount) {
       return {
         error: "Unable to created required workers"
+      }
+    }
+    else {
+      return {
+        error: "ok"
+      }
+    }
+  }
+  else if (req.code === codeGatherersNeeded) {
+    const created = spawnGatherers(req.amount);
+    console.log("Spawned %s gatherers", created);
+    console.log("Game created %s gatherers, needing %s", created, req.amount);
+    if (created < req.amount) {
+      return {
+        error: "Unable to created required gatherers"
       }
     }
     else {
