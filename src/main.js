@@ -20,7 +20,7 @@ const checkEconomy = () => {
       .values(Game.creeps)
       .filter(creep => creep.name[0] === 'W')
       .map(creep => 1)
-      .sum()
+      .sum();
   const idealCount = idealWorkerCount();
 
   console.log("Workers = %s", workerCount);
