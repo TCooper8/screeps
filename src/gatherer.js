@@ -41,30 +41,7 @@ const returnResource = creep => {
     return spawn.energy
   })
 
-  let state = creep.memory["state"];
-  if (!state) {
-    state = "gathering";
-  }
-
-  if (state === "gathering") {
-    if (spawner.energy >= spawner.energyCapacity) {
-      state = "gathering";
-    }
-    else {
-      state = "upgrading"
-    }
-  }
-  else {
-    if (spawner.energy === 0) {
-      state = "gathering"
-    }
-    else {
-      state = "upgrading"
-    }
-  }
-  creep.memory["state"] = state;
-
-  if (state === "gathering") {
+  if (spawner.energy <= spawner.energyCapacity) {
     err = creep.transfer(spawner, RESOURCE_ENERGY);
     if (err === ERR_NOT_IN_RANGE) {
       err = creep.moveTo(spawner);
@@ -94,9 +71,29 @@ const findResource =
     .map(err => log(creep, "Error %s", err))
     .orElse(() => log(creep, "No target found"))
 
+const resolveState = creep => {
+  let state = creep.memory["state"];
+  if (!state) {
+    state = "gathering";
+  }
+  else if (state === "gathering") {
+    if (creep.energy >= creep.energyCapacity) {
+      state = "upgrading"
+    }
+  }
+  else if (state === "upgrading") {
+    if (creep.energy === 0) {
+      state = "gathering"
+    }
+  }
+
+  creep.memory.state = state;
+}
+
 const gather = creep => {
-  if (creep.carry.energy < creep.carryCapacity) {
-    findResource(creep);
+  let state = creep.memory["state"];
+  if (state === "gathering") {
+    findResource(creep)
   }
   else {
     returnResource(creep);
