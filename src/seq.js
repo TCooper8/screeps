@@ -186,6 +186,7 @@ const ofArray = array => new Seq(new ArrayEnumerator(array));
 const ofObject = obj => new Seq(new ObjectEnumerator(obj));
 
 const map = mapping => seq => seq.map(mapping);
+const filter = predicate => seq => seq.filter(predicate);
 
 const iter = action => seq => {
   const enumerator = seq.getEnumerator();
@@ -211,6 +212,7 @@ const init = limit => init => {
 module.exports = {
   ofArray,
   ofObject,
+  filter,
   map,
   iter,
   fold,
