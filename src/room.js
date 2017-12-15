@@ -28,6 +28,7 @@ const availableWorkerSlots =
           source.pos.x + 1,
           true,
         )
+        console.log(objects);
         return
           Seq
             .ofArray(objects)

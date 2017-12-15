@@ -1,4 +1,4 @@
-const Seq = require('../../src/collections/seq');
+const Seq = require('../../src/seq');
 const Test = require('../test');
 const {
   printfn,
@@ -35,6 +35,11 @@ const testFilter = () => {
       .sum();
 
   Test.shouldBe(ls, 10)
+
+  Test.shouldBe(
+    Seq.init(100)(i => i).fold((acc, i) => i)(0),
+    1,
+  )
 }
 
 Seq.iter(f => f())(
