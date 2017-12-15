@@ -81,14 +81,7 @@ const init =
 const handleSpawners = Array.iter(spawner => {
   if (spawner.energy >= Worker.cost) {
     Worker
-      .spawn(spawner)
-      .map(name => {
-        Option
-          .fromUndefined(Memory[""])
-        const count = Memory[]
-        Memory[""]
-      })
-    Memory
+      .spawn(spawner);
   }
 });
 
