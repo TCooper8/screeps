@@ -26,9 +26,21 @@ const testObject = () => {
   Seq.iter(i => printfn("%s", i))(seq);
 }
 
+const testFilter = () => {
+  const ls =
+    Seq
+      .init(100)(i => i)
+      .filter(i => i < 5)
+      .cache()
+      .sum();
+
+  Test.shouldBe(ls, 10)
+}
+
 Seq.iter(f => f())(
   Seq.ofArray([
     testArray,
     testObject,
+    testFilter,
   ])
 )
