@@ -66,8 +66,11 @@ const checkGatherers = () => {
 }
 
 const checkEconomy = () =>
-  checkWorkers()
-    .append(checkGatherers());
+  _.sortBy(
+    checkWorkers()
+      .append(checkGatherers()),
+    req => req.priority,
+  )
 
 const spawnWorker =
   spawner =>
