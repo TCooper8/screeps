@@ -19,8 +19,13 @@ const iter = action => array => {
   }
 }
 
+const bind = binding => array => {
+  return binding(array);
+}
+
 Array.prototype.map = map;
 Array.prototype.iter = iter;
+Array.prototype.bind = bind;
 
 module.exports = {
   map,
