@@ -48,18 +48,8 @@ const moveWorkersToSlots = (workers, slots) => {
     return;
   }
 
-  // Run through the workers and assign them slots.
-  if (!Memory.workerSlots) Memory.workerSlots = {};
-  if (!Memory.workerSlotsInv) Memory.workerSlotsInv = {};
-
-  const e = worker.getEnumerator();
-  while (e.moveNext()) {
-    const worker = e.current();
-    if (!Memory.workerSlots[worker.name]) {
-      // This worker needs a slot.
-      Worker.gather(worker);
-    }
-  }
+  console.log("Moving workers...");
+  workers.iter(Worker.gather)
 }
 
 const createWorkers = room => nWorkers =>
