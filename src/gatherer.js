@@ -9,6 +9,9 @@ const log = (creep, format, ...args) => {
   console.log("Creep[%s] " + format, creep.name, ...args);
 }
 
+const gathering = 0
+const upgrading = 1
+
 const spawn = (spawner) => {
   console.log("Spawning creep...");
   const name = 'G' + _.random(Number.MAX_SAFE_INTEGER).toString();
@@ -47,6 +50,9 @@ const returnResource = creep => {
       err = creep.moveTo(spawner);
       console.log("Creep[%s] moving to spawner(%s)", creep.name, spawner.name);
     }
+    else if (err === ERR_NOT_ENOUGH_RESOURCES) {
+      creep.memory.state = gathering;
+    }
     else {
       console.log("Creep[%s] unhandled error(%s)", creep.name, err);
     }
@@ -72,19 +78,22 @@ const findResource =
     .orElse(() => log(creep, "No target found"))
 
 const resolveState = creep => {
-  let state = creep.memory["state"];
+  let state = creep.memory.state;
   if (!state) {
-    state = "gathering";
+    state = gathering;
   }
-  else if (state === "gathering") {
+  else if (state === gathering) {
     if (creep.energy >= creep.energyCapacity) {
-      state = "upgrading"
+      state = upgrading;
     }
   }
-  else if (state === "upgrading") {
+  else if (state === upgrading) {
     if (creep.energy === 0) {
-      state = "gathering"
+      state = gathering;
     }
+  }
+  else {
+    state = gathering;
   }
 
   creep.memory.state = state;
@@ -93,7 +102,7 @@ const resolveState = creep => {
 const gather = creep => {
   resolveState(creep);
   let state = creep.memory["state"];
-  if (state === "gathering") {
+  if (state === gathering) {
     findResource(creep)
   }
   else {
