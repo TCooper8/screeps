@@ -13,7 +13,6 @@ const handleCreeps = Array.iter(creep => {
 });
 
 module.exports.loop = function() {
-  const spawns = Object.keys(Game.spawns);
   Object
     .values(Game.spawns)
     .bind(handleSpawners);
