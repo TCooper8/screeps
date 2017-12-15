@@ -80,6 +80,17 @@ const append = arrayA => arrayB => {
   return acc;
 }
 
+const init = count => initializer => {
+  const arr = new Array(count);
+  var i = -1;
+
+  while (++i < count) {
+    arr[i] = intiailizer(i);
+  }
+
+  return arr;
+}
+
 Array.prototype.map = function(mapping) { return map(mapping)(this) };
 Array.prototype.iter = function(action) { return iter(action)(this) };
 Array.prototype.bind = function(binding) { return bind(binding)(this) }
@@ -95,4 +106,10 @@ Array.prototype.append = function(arrayB) {
 module.exports = {
   map,
   iter,
+  bind,
+  sum,
+  filter,
+  foldWhile,
+  append,
+  init,
 }
