@@ -99,19 +99,6 @@ const resolveState = creep => {
   if (!state) {
     state = gathering;
   }
-  else if (state === gathering) {
-    if (creep.energy >= creep.energyCapacity) {
-      state = upgrading;
-    }
-  }
-  else if (state === upgrading) {
-    if (creep.energy === 0) {
-      state = gathering;
-    }
-  }
-  else {
-    state = gathering;
-  }
 
   creep.memory.state = state;
 }
