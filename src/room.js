@@ -1,6 +1,6 @@
 // This module will handle the behavior for a given room.
 
-const Seq = require("./collections/seq");
+const Seq = require("./seq");
 
 const economyState = 0
 
