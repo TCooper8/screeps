@@ -25,7 +25,10 @@ const bind = binding => array => {
 
 Array.prototype.map = mapping => map(mapping)(this);
 Array.prototype.iter = action => iter(action)(this);
-Array.prototype.bind = binding => bind(binding)(this);
+Array.prototype.bind = binding => {
+  console.log("Binding array");
+  return bind(binding)(this);
+}
 
 module.exports = {
   map,
