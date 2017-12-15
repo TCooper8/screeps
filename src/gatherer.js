@@ -58,7 +58,11 @@ const returnResource = creep => {
 const findResource =
   creep =>
     findDroppedResources(creep)
-    .map(target => creep.moveTo(target))
+    .map(target => {
+      if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
+        return creep.moveTo(target);
+      }
+    })
     .map(err => log(creep, "Error %s", err))
     .orElse(() => log(creep, "No target found"))
 
