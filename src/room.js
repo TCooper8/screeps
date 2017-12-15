@@ -85,7 +85,7 @@ const roomState = room => {
 
   // How many slots for workers are there?
   const workerSlots = availableWorkerSlots(room).cache();
-  const workerSlotCount = workerSlots.count();
+  const workerSlotsCount = workerSlots.count();
   const workerCount = workers.count()
 
   if (workerCount < workerSlotsCount) {

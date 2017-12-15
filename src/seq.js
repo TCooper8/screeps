@@ -2,6 +2,13 @@ const Enumerator = require('./enumerator');
 const ArrayEnumerator = require('./array-enumerator');
 const ObjectEnumerator = require('./object-enumerator');
 
+class Pair {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+}
+
 class MappingEnumerator extends Enumerator {
   constructor(mapping, e) {
     super();
