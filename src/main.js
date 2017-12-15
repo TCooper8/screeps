@@ -1,4 +1,4 @@
-const worker = require('./worker')
+const Worker = require('./worker')
 const Option = require('./option')
 const Array = require('./array')
 
@@ -8,13 +8,17 @@ const handleSpawners = Array.iter(spawner => {
   }
 });
 
+const handleCreeps = Array.iter(creep => {
+  Worker.gather(creep);
+});
+
 module.exports.loop = function() {
   const spawns = Object.keys(Game.spawns);
   Object
     .values(Game.spawns)
     .bind(handleSpawners);
 
-  _.each(Game.creeps, (creep) => {
-    worker.gather(creep);
-  });
+  Object
+    .values(Game.creeps)
+    .bind(handleCreeps);
 }
