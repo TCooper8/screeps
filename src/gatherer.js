@@ -1,6 +1,10 @@
 const Array = require('./array');
 const Option = require('./option');
 
+const moveCost = 50
+const workCost = 100
+const carryCost = 50
+
 const log = (creep, format, ...args) => {
   console.log("Creep[%s] " + format, creep.name, ...args);
 }
