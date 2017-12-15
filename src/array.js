@@ -1,6 +1,6 @@
 const map = mapping => array => {
   var results = mapping.constructor.call(array.length);
-  var i = 0;
+  var i = -1;
   var len = array.length;
 
   while (++i < len) {
@@ -11,9 +11,8 @@ const map = mapping => array => {
 }
 
 const iter = action => array => {
-  var i = 0,
+  var i = -1,
       len = array.length;
-  console.log("Iterating over array len=%d", len);
 
   while (++i < len) {
     action(array[i]);
