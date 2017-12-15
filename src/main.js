@@ -1,5 +1,7 @@
 const worker = require('./worker')
-const Option = require('./option')
+const {
+  Option,
+} = require('./option')
 
 module.exports.loop = function() {
   const spawns = Object.keys(Game.spawns);
