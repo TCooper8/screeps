@@ -50,7 +50,6 @@ const roomState = room => {
   // Now, we can establish what work needs to be done.
 
   // How many slots for workers are there?
-  const workerSlots = 
 }
 
 // We need to figure out what state the room is in.
