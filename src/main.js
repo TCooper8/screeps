@@ -174,12 +174,12 @@ module.exports.loop = function() {
       .filter(name => !Game.creeps[name])
       .map(name => delete Memory.creeps[name]);
 
-  init()
+  //init()
 
-  Object
-    .values(Game.creeps)
-    .filter(creep => !creep.spawning)
-    .bind(handleCreeps);
+  //Object
+  //  .values(Game.creeps)
+  //  .filter(creep => !creep.spawning)
+  //  .bind(handleCreeps);
 
   Seq
     .ofObject(Game.rooms)
