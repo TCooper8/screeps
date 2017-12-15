@@ -65,10 +65,9 @@ const checkGatherers = () => {
   }
 }
 
-const checkEconomy = () => {
+const checkEconomy = () =>
   checkWorkers()
     .append(checkGatherers());
-}
 
 const spawnWorker =
   spawner =>
