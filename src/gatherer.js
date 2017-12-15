@@ -41,7 +41,7 @@ const returnResource = creep => {
     return spawn.energy
   })
 
-  const state = creep.memory["state"];
+  let state = creep.memory["state"];
   if (!state) {
     state = "gathering";
   }
