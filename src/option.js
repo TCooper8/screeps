@@ -21,6 +21,7 @@ class Some extends Option {
   isSome() { return true }
   map(mapping) { return new Some(mapping(this.value)) }
   bind(binding) { return binding(this.value) }
+  value() { return this.value }
 }
 
 const none = new None();
@@ -30,6 +31,8 @@ const isNone = option => option.isNone();
 const isSome = option => option.isSome();
 const map = mapping => option => option.map(mapping);
 const bind = binding => option => option.bind(binding);
+const fromNull = nullable => nullable === null ? none : some(nullable);
+const orElse = action => option => option.isNone() ? action() : option.value;
 
 module.exports = {
   none,
@@ -38,4 +41,5 @@ module.exports = {
   isSome,
   map,
   bind,
+  fromNull,
 }
