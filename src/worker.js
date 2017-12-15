@@ -6,7 +6,7 @@ const carryCost = 50
 
 const spawn = (spawner) => {
   console.log("Spawning creep...");
-  const name = _.random(Number.MAX_SAFE_INTEGER).toString();
+  const name = 'W' + _.random(Number.MAX_SAFE_INTEGER).toString();
   const err = spawner.spawnCreep(
     [ MOVE,
       WORK,
