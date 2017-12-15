@@ -26,7 +26,7 @@ const gatherersNeeded = amount => {
 }
 
 const idealWorkerCount = () => 3;
-const idealGathererCount = () => 2;
+const idealGathererCount = () => 10;
 
 const checkWorkers = () => {
   const workerCount =

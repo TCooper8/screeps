@@ -20,7 +20,7 @@ const roomState = room => {
   const workers = Seq.filter(isWorker)(roomCreeps);
   const gatherers = Seq.filter(isGatherer)(roomCreeps);
 
-  console.log("Workers = %s", workers.toArray().length)
+  console.log("Workers = ", workers.toArray().length)
 }
 
 // We need to figure out what state the room is in.
