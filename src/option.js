@@ -4,10 +4,18 @@ class None extends Option {
   constructor() {}
 }
 
-const none = None();
+class Some extends Option {
+  constructor(value) {
+    this.value = value;
+  }
+}
+
+const none = new None();
+const some = value => new Some(value);
 
 const OptionModule = {
   none,
+  some,
 }
 
 module.exports = {
