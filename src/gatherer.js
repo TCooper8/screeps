@@ -52,7 +52,8 @@ const returnResource = creep => {
   else {
     console.log("Gatherer moving to controller");
     if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(creep.room.controller);
+      const err = creep.moveTo(creep.room.controller);
+      console.log("Move to controller error %d", err);
     }
   }
 };
