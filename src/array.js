@@ -23,10 +23,54 @@ const bind = binding => array => {
   return binding(array);
 }
 
-Array.prototype.map = mapping => map(mapping)(this);
-Array.prototype.iter = action => iter(action)(this);
-Array.prototype.bind = function(binding) {
-  return bind(binding)(this);
+const sum = array => {
+  var i = -1,
+      length = array.length,
+      sum = 0;
+
+  while (++i < length) {
+    sum += array[i];
+  }
+
+  return sum;
+}
+
+const filter = predicate => array => {
+  var result = [];
+  var i = -1,
+      length = array.length;
+
+  while (++i < length) {
+    if (predicate(array[i])) {
+      result.push(array[i]);
+    }
+  }
+
+  return result;
+}
+
+const foldWhile = (folder, predicate) => state => array => {
+  var acc = state;
+  var i = -1,
+      length = array.length;
+
+  while (++i < length) {
+    if (!predicate(acc)) {
+      return acc;
+    }
+    acc = folder(acc, array[i])
+  }
+
+  return acc;
+}
+
+Array.prototype.map = function(mapping) { return map(mapping)(this) };
+Array.prototype.iter = function(action) { return iter(action)(this) };
+Array.prototype.bind = function(binding) { return bind(binding)(this) }
+Array.prototype.sum = function() { return sum(this) }
+Array.prototype.filter = function(predicate) { return filter(predicate)(this) }
+Array.prototype.foldWhile = function(folder, predicate) {
+  return state => foldWhile(folder, predicate)(state)(this);
 }
 
 module.exports = {

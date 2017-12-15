@@ -32,6 +32,7 @@ const isSome = option => option.isSome();
 const map = mapping => option => option.map(mapping);
 const bind = binding => option => option.bind(binding);
 const fromNull = nullable => nullable === null ? none : some(nullable);
+const fromUndefined = value => value === undefined ? none : some(value);
 const orElse = action => option => option.isNone() ? action() : option.value;
 
 module.exports = {
