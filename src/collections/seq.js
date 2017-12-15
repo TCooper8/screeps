@@ -22,6 +22,34 @@ class MappingEnumerator extends Enumerator {
   }
 }
 
+class FilterEnumerator extends Enumerator {
+  constructor(predicate, e) {
+    super();
+    this._e = e;
+    this._predicate = predicate;
+    this._current = undefined;
+  }
+
+  moveNext() {
+    while (this._e.moveNext()) {
+      const cur = this._e.current();
+      if (this._predicate(cur)) {
+        this._current = cur;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  current() {
+    return this._current;
+  }
+
+  clone() {
+    return new FilterEnumerator(this._predicate, this._e);
+  }
+}
+
 class Seq {
   constructor(enumerator) {
     this._enumerator = enumerator;
@@ -41,8 +69,12 @@ class Seq {
 
   map(mapping) {
     const enumerator = this.getEnumerator();
-
     return new Seq(new MappingEnumerator(mapping, enumerator));
+  }
+
+  filter(predicate) {
+    const enumerator = this.getEnumerator();
+    return new Seq(new FilterEnumerator(predicate, enumerator));
   }
 }
 
