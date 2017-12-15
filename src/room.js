@@ -48,10 +48,6 @@ const moveWorkersToSlots = (workers, slots) => {
 
   console.log("Slots", slotCount);
 
-  if (slotCount === 0) {
-    return;
-  }
-
   workers.iter(Worker.gather)
 }
 
