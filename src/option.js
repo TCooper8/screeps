@@ -1,16 +1,5 @@
 class Option { }
 
-class None extends Option {
-  constructor() {
-    super()
-  }
-
-  isNone() { return true }
-  isSome() { return false }
-  map(mapping) { return this }
-  bind(binding) { return this }
-}
-
 class Some extends Option {
   constructor(value) {
     super();
@@ -22,6 +11,19 @@ class Some extends Option {
   map(mapping) { return new Some(mapping(this.value)) }
   bind(binding) { return binding(this.value) }
   value() { return this.value }
+  orElse(value) { return this }
+}
+
+class None extends Option {
+  constructor() {
+    super()
+  }
+
+  isNone() { return true }
+  isSome() { return false }
+  map(mapping) { return this }
+  bind(binding) { return this }
+  orElse(value) { return new Some(value) }
 }
 
 const none = new None();
