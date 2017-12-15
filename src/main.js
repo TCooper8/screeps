@@ -23,7 +23,7 @@ const gatherersNeeded = amount => {
 }
 
 const idealWorkerCount = () => 3;
-const idealGathererCount = () => 2;
+const idealGathererCount = () => 10;
 
 const checkWorkers = () => {
   const workerCount =
@@ -170,9 +170,6 @@ module.exports.loop = function() {
       .keys(Memory.creeps)
       .filter(name => !Game.creeps[name])
       .map(name => delete Memory.creeps[name]);
-  //Object
-  //  .values(Game.spawns)
-  //  .bind(handleSpawners);
 
   init()
 
