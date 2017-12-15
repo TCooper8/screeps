@@ -26,9 +26,18 @@ class Some extends Option {
 const none = new None();
 const some = value => new Some(value);
 
+const isNone = option => option.isNone();
+const isSome = option => option.isSome();
+const map = mapping => option => option.map(mapping);
+const bind = binding => option => option.bind(binding);
+
 const OptionModule = {
   none,
   some,
+  isNone,
+  isSome,
+  map,
+  bind,
 }
 
 module.exports = {
