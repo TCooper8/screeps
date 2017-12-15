@@ -162,6 +162,17 @@ class Seq {
 
     return count;
   }
+
+  fold(folder) {
+    return state => {
+      const enumerator = this.getEnumerator();
+      var acc = state;
+      while (enumerator.moveNext()) {
+        acc = folder(acc, enumerator.current())
+      }
+      return acc;
+    }
+  }
 }
 
 const ofArray = array => new Seq(new ArrayEnumerator(array));
