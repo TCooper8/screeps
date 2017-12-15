@@ -91,6 +91,7 @@ const resolveState = creep => {
 }
 
 const gather = creep => {
+  resolveState(creep);
   let state = creep.memory["state"];
   if (state === "gathering") {
     findResource(creep)
