@@ -131,7 +131,7 @@ const handleInitState = roomInfo => {
 
   if (gathererCount === 0) {
     printfn("Creating 1 gatherer");
-    const created = createGatherer(roomInfo.room)(1);
+    const created = createGatherers(roomInfo.room)(1);
     if (created !== 1) {
       errorfn("Failed to created required gatherers");
     }
