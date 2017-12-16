@@ -74,6 +74,17 @@ const createWorkers = room => nWorkers =>
     .sum()
 ;
 
+const createGatherers = room => nWorkers =>
+  // Go through any available spawners and create workers.
+  Seq
+    .ofObject(Game.spawns)
+    .map(pair => pair.value)
+    .filter(spawner => spawner.room.name === room.name)
+    .map(Gatherer.spawn)
+    .map(() => 1)
+    .sum()
+;
+
 class RoomInfo {
   constructor(room) {
     this.room = room;
