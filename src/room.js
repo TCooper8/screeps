@@ -169,7 +169,7 @@ const roomState = room => {
   //}
 
   //// Move workers to where they need to be.
-  //moveWorkersToSlots(workers, workerSlots)
+  moveWorkersToSlots(roomInfo.workers(), roomInfo.workerSlots());
 }
 
 // We need to figure out what state the room is in.
