@@ -75,7 +75,7 @@ const roomState = room => {
   // Now, we can establish what work needs to be done.
 
   // How many slots for workers are there?
-  const workerSlots = Seq.ofArray(availableWorkerSlots(room));
+  const workerSlots = availableWorkerSlots(room);
   const workerSlotsCount = workerSlots.count();
   const workerCount = workers.count()
 
