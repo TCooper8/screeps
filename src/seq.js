@@ -47,7 +47,7 @@ class ActionEnumerator extends Enumerator {
   }
 
   clone() {
-    return new ActionEnumerator(this._action, this._e);
+    return new ActionEnumerator(this._action, this._e.clone());
   }
 }
 
@@ -75,7 +75,7 @@ class FilterEnumerator extends Enumerator {
   }
 
   clone() {
-    return new FilterEnumerator(this._predicate, this._e);
+    return new FilterEnumerator(this._predicate, this._e.clone());
   }
 }
 

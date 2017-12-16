@@ -61,6 +61,17 @@ const testObjects = () => {
   )
 }
 
+Test.unit("Seq.filter", () => {
+  const seq =
+    Seq
+      .init(100)(i => i)
+      .filter(i => i < 20)
+      ;
+
+  Test.shouldBe(seq.sum(), 190);
+  Test.shouldBe(seq.sum(), 190);
+})
+
 Test.unit("Object.iter", () => {
   const seq = Seq.ofObject({
     a: 1,
