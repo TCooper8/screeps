@@ -84,8 +84,14 @@ class RoomInfo {
     this.workers = Lazy(() =>
       Seq.filter(isWorker)(this.creeps())
     )
+    this.workerCount = Lazy(() =>
+      this.workers().count()
+    )
     this.gatherers = Lazy(() =>
       Seq.filter(isGatherer)(this.creeps())
+    )
+    this.gathererCount = Lazy(() =>
+      this.gatherers().count()
     )
     this.workerSlots = Lazy(() =>
       availableWorkerSlots(this.room)
@@ -95,6 +101,7 @@ class RoomInfo {
 
 // This will handle the case of an empty room.
 const handleInitState = roomInfo => {
+  printfn("WorkerCount =", roomInfo.workerCount())
   if (roomInfo.workers().count() !== 0 && roomInfo.gatherers().count() !== 0) {
     return;
   }
