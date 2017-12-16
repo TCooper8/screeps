@@ -54,14 +54,7 @@ const availableWorkerSlots =
   }
 
 const moveWorkersToSlots = (workers, slots) => {
-  console.log("Moving workers...");
-  let slotCount = slots.count();
-  //const workerCount = workers.count();
-
-  console.log("Slots", slotCount);
-  const _workers = workers.toArray();
-  console.log(_workers);
-  workers.iter(Worker.gather)
+  Seq.iter(Worker.gather)
 }
 
 const createWorkers = room => nWorkers =>
