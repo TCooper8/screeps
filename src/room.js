@@ -50,7 +50,9 @@ const availableWorkerSlots =
 
 const moveWorkersToSlots = (workers, slots) => {
   printfn("Moving", workers.count(), "workers");
-  Seq.iter(Worker.gather)
+  Seq
+    .tap(worker => console.log("Moving", worker.name))
+    .iter(Worker.gather)
 }
 
 const createWorkers = room => nWorkers =>
