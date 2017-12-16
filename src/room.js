@@ -110,10 +110,20 @@ const handleInitState = roomInfo => {
   }
 
   // Need at least 1 worker, and 1 gatherer.
-  printfn("Creating 1 worker");
-  const workersCreated = createWorkers(roomInfo.room)(1);
-  if (workersCreated != 1) {
-    errorfn("Failed to create required workers");
+  if (workerCount === 0) {
+    printfn("Creating 1 worker");
+    const created = createWorkers(roomInfo.room)(1);
+    if (created !== 1) {
+      errorfn("Failed to create required workers");
+    }
+  }
+
+  if (gathererCount === 0) {
+    printfn("Creating 1 gatherer");
+    const created = createGatherer(roomInfo.room)(1);
+    if (created !== 1) {
+      errorfn("Failed to created required gatherers");
+    }
   }
 }
 
