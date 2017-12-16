@@ -25,7 +25,7 @@ class MappingEnumerator extends Enumerator {
   }
 
   clone() {
-    return new MappingEnumerator(this._mapping, this._e);
+    return new MappingEnumerator(this._mapping, this._e.clone());
   }
 }
 
