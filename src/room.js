@@ -35,7 +35,11 @@ const availableWorkerSlots =
               .ofArray(objects)
               .filter(obj => obj.type === "terrain")
               .filter(obj => obj.terrain !== "wall")
-              .tap(obj => console.log(obj));
+              .tap(obj => {
+                Seq
+                  .ofObject(obj)
+                  .iter(pair => console.log(pair.key, pair.value))
+              })
 
           return results.toArray()
         })
