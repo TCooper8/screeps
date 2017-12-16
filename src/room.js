@@ -65,7 +65,7 @@ const createWorkers = room => nWorkers =>
 
 const roomState = room => {
   const creeps = Seq.ofObject(Game.creeps).map(pair => pair.value);
-  const roomCreeps = creepsInRoom(room)(creeps).cache();
+  const roomCreeps = creepsInRoom(room)(creeps);
   const workers = Seq.filter(isWorker)(roomCreeps);
   const gatherers = Seq.filter(isGatherer)(roomCreeps);
 
