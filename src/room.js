@@ -41,11 +41,6 @@ const availableWorkerSlots =
               .ofArray(objects)
               .filter(obj => obj.type === "terrain")
               .filter(obj => obj.terrain !== "wall")
-              .tap(obj => {
-                Seq
-                  .ofObject(obj)
-                  .iter(pair => console.log(pair.key, pair.value))
-              })
 
           return results.toArray()
         })
@@ -54,6 +49,7 @@ const availableWorkerSlots =
   }
 
 const moveWorkersToSlots = (workers, slots) => {
+  printfn("Moving", workers.count(), "workers");
   Seq.iter(Worker.gather)
 }
 
