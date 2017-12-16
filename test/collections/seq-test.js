@@ -90,8 +90,8 @@ Test.unit("Seq.cache", () => {
 Test.unit("Object Seq.iter speed", () => {
   const obj =
     Seq
-      .init(1 << 20)(i => i)
-      .fold((obj, i) => obj[i] = i)({})
+      .init(1 << 23)(i => i)
+      .fold((obj, i) => { obj[i] = i; return obj })({})
       ;
 
   const seqf = Test.timef(() => {
@@ -118,11 +118,15 @@ Test.unit("Object Seq.iter speed", () => {
       max,
     }
   })()
+
+  console.log("Seq = %s", seqf.time);
+  console.dir(seqf.result);
+
   const _f = Test.timef(() => {
-    const sum = _.sum();
+    const sum = _.sum(obj);
     const sump2 = _.sum(_.map(obj, i => i * i));
-    const min = _.min(obj);
-    const max = _.max(obj);
+    const min = _.min(obj, i => i);
+    const max = _.max(obj, i => i);
 
     return {
       sum,
@@ -132,8 +136,8 @@ Test.unit("Object Seq.iter speed", () => {
     }
   })()
 
-  console.log("Seq = %s", seqf.time);
   console.log("_ = %s", _f.time);
+  console.dir(_f.result);
 });
 
 Test.unit("Object.iter", () => {

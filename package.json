@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/TCooper8/screeps#readme",
   "devDependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^3.10.1"
   }
 }
