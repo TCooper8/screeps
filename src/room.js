@@ -102,7 +102,10 @@ class RoomInfo {
 // This will handle the case of an empty room.
 const handleInitState = roomInfo => {
   printfn("WorkerCount =", roomInfo.workerCount())
-  if (roomInfo.workers().count() !== 0 && roomInfo.gatherers().count() !== 0) {
+  const workerCount = roomInfo.workerCount();
+  const gathererCount = roomInfo.gathererCount();
+
+  if (!(workerCount <= 1 || gathererCount <= 1)) {
     return;
   }
 
