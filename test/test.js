@@ -19,9 +19,8 @@ const tryf = f => {
   }
 }
 
-const timef = (label, f) => (...args) => {
+const timef = f => (...args) => {
   const ti = process.hrtime()[1];
-  printfn(ti)
   const result = f(...args);
   const tf = process.hrtime()[1];
   const time = (tf - ti) / (1000000.0);
@@ -51,11 +50,8 @@ class TestResult {
 }
 
 const unit = (label, fun) => {
-  printfn("Test[%s] Running", this.label);
-  const result = timef(
-    this.label,
-    fun
-  )();
+  printfn("Test[%s] running", label);
+  const result = timef(fun)();
   const testResult = new TestResult(
     label,
     result.time,
@@ -69,4 +65,5 @@ const unit = (label, fun) => {
 module.exports = {
   shouldBe,
   unit,
+  timef,
 }

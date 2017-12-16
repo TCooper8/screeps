@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Seq = require('../../src/seq');
 const Test = require('../test');
 const {
@@ -71,6 +72,69 @@ Test.unit("Seq.filter", () => {
   Test.shouldBe(seq.sum(), 190);
   Test.shouldBe(seq.sum(), 190);
 })
+
+Test.unit("Seq.cache", () => {
+  const seq =
+    Seq
+      .init(100)(i => i)
+      .filter(i => i > 20)
+      .filter(i => i < 80)
+      .map(i => i * i)
+      .cache()
+      ;
+
+  Test.shouldBe(seq.sum(), 164610);
+  Test.shouldBe(seq.sum(), 164610);
+})
+
+Test.unit("Object Seq.iter speed", () => {
+  const obj =
+    Seq
+      .init(1 << 20)(i => i)
+      .fold((obj, i) => obj[i] = i)({})
+      ;
+
+  const seqf = Test.timef(() => {
+    const seq =
+      Seq
+        .ofObject(obj)
+        .map(pair => pair.value)
+      ;
+    const sum = seq.sum();
+    const sump2 = seq.map(i => i * i).sum();
+    const min = seq.fold((min, i) => {
+      if (Number.isNaN(min)) return i;
+      return i < min ? i : min;
+    })(NaN);
+    const max = seq.fold((max, i) => {
+      if (Number.isNaN(max)) return i;
+      return i > max ? i : max;
+    })(NaN);
+
+    return {
+      sum,
+      sump2,
+      min,
+      max,
+    }
+  })()
+  const _f = Test.timef(() => {
+    const sum = _.sum();
+    const sump2 = _.sum(_.map(obj, i => i * i));
+    const min = _.min(obj);
+    const max = _.max(obj);
+
+    return {
+      sum,
+      sump2,
+      min,
+      max,
+    }
+  })()
+
+  console.log("Seq = %s", seqf.time);
+  console.log("_ = %s", _f.time);
+});
 
 Test.unit("Object.iter", () => {
   const seq = Seq.ofObject({
