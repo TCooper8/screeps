@@ -17,29 +17,30 @@ const isWorker = creep => creep.name[0] === 'W'
 const isGatherer = creep => creep.name[0] === 'G'
 
 const availableWorkerSlots =
-  room =>
-    Seq
-      .ofArray(room.find(FIND_SOURCES_ACTIVE))
-      .map(source => {
-        // Look at all the cells near this source.
-        const objects = room.lookAtArea(
-          source.pos.y - 1,
-          source.pos.x - 1,
-          source.pos.y + 1,
-          source.pos.x + 1,
-          true,
-        )
-        const results =
-          Seq
-            .ofArray(objects)
-            .filter(obj => obj.type === "terrain")
-            .filter(obj => obj.terrain !== "wall")
+  room => {
+    const seq = 
+      Seq
+        .ofArray(room.find(FIND_SOURCES_ACTIVE))
+        .map(source => {
+          // Look at all the cells near this source.
+          const objects = room.lookAtArea(
+            source.pos.y - 1,
+            source.pos.x - 1,
+            source.pos.y + 1,
+            source.pos.x + 1,
+            true,
+          )
+          const results =
+            Seq
+              .ofArray(objects)
+              .filter(obj => obj.type === "terrain")
+              .filter(obj => obj.terrain !== "wall")
 
-        results.iter(obj => console.log(obj.type));
-        return results.toArray()
-      })
-      .fold((acc, array) => Array.append(acc, array))([])
-;
+          return results.toArray()
+        })
+        .fold((acc, array) => acc.append(array))([])
+    return Seq.ofArray(seq);
+  }
 
 const moveWorkersToSlots = (workers, slots) => {
   console.log("Moving workers...");
